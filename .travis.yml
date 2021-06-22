@@ -19,6 +19,9 @@ before_install:
 script:
   - docker-compose -p guess-my-number run --rm -u node guess-my-number npm run test:ci
 
+before_deploy:
+  - docker-compose -p guess-my-number run -u root --rm guess-my-number chown -R $UID:$UID .
+
 deploy:
   provider: elasticbeanstalk
   region: "us-east-2"
