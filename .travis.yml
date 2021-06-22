@@ -1,0 +1,33 @@
+language: generic
+
+sudo: required
+
+services:
+  - docker
+
+env:
+  - DOCKER_COMPOSE_VERSION=1.29.2
+
+before_install:
+  - sudo rm /usr/local/bin/docker-compose
+  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+  - chmod +x docker-compose
+  - sudo mv docker-compose /usr/local/bin
+  - docker-compose -p guess-my-number run -u root --rm guess-my-number chown -R node:node .
+  - docker-compose -p guess-my-number run --rm -u node guess-my-number npm install
+
+script:
+  - docker-compose -p guess-my-number run --rm -u node guess-my-number npm run test:ci
+
+deploy:
+  provider: elasticbeanstalk
+  region: "us-east-2"
+  app: "guess-my-number"
+  env: "Guessmynumber-env"
+  bucket_name: "elasticbeanstalk-us-east-2-708390195852"
+  bucket_path: "guess-my-number"
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key:
+    secure: "$AWS_SECRET_KEY"
