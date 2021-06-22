@@ -1,0 +1,30 @@
+FROM node:alpine
+
+ARG NG_CLI=12
+ENV NG_CLI ${NG_CLI}
+
+ARG NODE_ENV=development
+ENV NODE_ENV $NODE_ENV
+
+ARG PORT=4200
+ENV PORT $PORT
+EXPOSE $PORT
+
+RUN npm i npm@latest -g && npm install -g @angular/cli@${NG_CLI}
+
+RUN mkdir -p /opt/src/app && chown node:node /opt/src/app
+WORKDIR "/opt/src/app"
+
+USER node
+
+# COPY --chown=node:node package.json package-lock.json* ./
+
+# RUN npm install --no-optional && npm cache clean --force
+
+ENV PATH /opt/src/app/node_modules/.bin:$PATH
+
+COPY docker-entrypoint.sh /usr/local/bin/
+ENTRYPOINT ["docker-entrypoint.sh"]
+
+CMD ["ng", "serve", "--host", "0.0.0.0"]
+
