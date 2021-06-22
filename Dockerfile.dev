@@ -10,7 +10,28 @@ ARG PORT=4200
 ENV PORT $PORT
 EXPOSE $PORT
 
-RUN npm i npm@latest -g && npm install -g @angular/cli@${NG_CLI}
+# Installs latest Chromium package.
+RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" > /etc/apk/repositories \
+    && echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories \
+    && echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories \
+    && echo "http://dl-cdn.alpinelinux.org/alpine/v3.12/main" >> /etc/apk/repositories \
+    && apk upgrade -U -a \
+    && apk add \
+    libstdc++ \
+    chromium \
+    harfbuzz \
+    nss \
+    freetype \
+    ttf-freefont \
+    font-noto-emoji \
+    wqy-zenhei \
+    && rm -rf /var/cache/* \
+    && mkdir /var/cache/apk
+
+ENV CHROME_BIN=/usr/bin/chromium-browser \
+    CHROME_PATH=/usr/lib/chromium/
+
+RUN npm i -g npm@latest && npm i -g @angular/cli@${NG_CLI}
 
 RUN mkdir -p /opt/src/app && chown node:node /opt/src/app
 WORKDIR "/opt/src/app"

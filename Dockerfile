@@ -8,6 +8,8 @@ RUN npm install && npm run build
 
 FROM nginx
 
+EXPOSE 80
+
 WORKDIR /usr/share/nginx/html
 
 RUN rm -rf ./*
