@@ -27,7 +27,7 @@ deploy:
   bucket_name: "elasticbeanstalk-us-east-2-708390195852"
   bucket_path: "guess-my-number"
   on:
-    branch: main
+    branch: master
   access_key_id: $AWS_ACCESS_KEY
   secret_access_key:
     secure: "$AWS_SECRET_KEY"
