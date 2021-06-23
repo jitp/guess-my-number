@@ -34,6 +34,7 @@ deploy:
   env: "Guessmynumber-env"
   bucket_name: "elasticbeanstalk-us-east-2-708390195852"
   bucket_path: "guess-my-number"
+  skip_cleanup: true
   on:
     branch: main
   access_key_id: $AWS_ACCESS_KEY
