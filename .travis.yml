@@ -25,7 +25,7 @@ after_success:
   - docker push jitpz/guess-my-number
 
 before_deploy:
-  - docker-compose -p guess-my-number -f docker-compose.dev.yml run --rm -u root guess-my-number chown -R $UID:$UID
+  - docker-compose -p guess-my-number -f docker-compose.dev.yml run --rm -u root guess-my-number chown -R $UID:$UID ./
 
 deploy:
   provider: elasticbeanstalk
