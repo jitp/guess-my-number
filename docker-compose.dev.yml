@@ -1,0 +1,10 @@
+version: "3.9"
+services:
+    guess-my-number:
+        build: 
+            dockerfile: Dockerfile.dev
+            context: ./
+        ports:
+            - "4200:4200"
+        volumes:
+            - ./:/opt/src/app
