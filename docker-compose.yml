@@ -2,6 +2,8 @@ version: "3.9"
 services:
     guess-my-number:
         image: jitpz/guess-my-number
+        ports: 
+            - "80:80"
         healthcheck:
             test: ["CMD", "curl", "-f", "http://localhost"]
             interval: 1m30s
