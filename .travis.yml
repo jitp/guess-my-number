@@ -31,7 +31,7 @@ deploy:
   provider: elasticbeanstalk
   region: "us-east-2"
   app: "guess-my-number"
-  env: "Guessmynumber-env"
+  env: "Guessmynumber-env-1"
   bucket_name: "elasticbeanstalk-us-east-2-708390195852"
   bucket_path: "guess-my-number"
   skip_cleanup: true
