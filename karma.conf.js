@@ -10,7 +10,8 @@ module.exports = function (config) {
       require('karma-chrome-launcher'),
       require('karma-jasmine-html-reporter'),
       require('karma-coverage'),
-      require('@angular-devkit/build-angular/plugins/karma')
+      require('@angular-devkit/build-angular/plugins/karma'),
+      require('karma-sonarqube-unit-reporter')
     ],
     customLaunchers: {
       ChromeHeadlessCI: {
@@ -35,10 +36,19 @@ module.exports = function (config) {
       subdir: '.',
       reporters: [
         { type: 'html' },
+        { type: 'lcovonly', subdir: '.', file: 'lcov.info' },
         { type: 'text-summary' }
       ]
     },
-    reporters: ['progress', 'kjhtml'],
+    sonarQubeUnitReporter: {
+      sonarQubeVersion: 'LATEST',
+      outputFile: 'reports/ut_report.xml',
+      overrideTestDescription: true,
+      testPaths: ['./src'],
+      testFilePattern: '.spec.ts',
+      useBrowserName: false
+    },
+    reporters: ['progress', 'kjhtml', 'sonarqubeUnit'],
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,

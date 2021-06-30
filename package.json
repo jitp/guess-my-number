@@ -6,6 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
+    "clean:all": "rimraf -- doc coverage reports dist compiled webpack-cache",
+    "clean": "npm cache verify && rimraf -- node_modules doc coverage reports dist compiled webpack-cache",
     "test": "ng test",
     "test:ci": "ng test --browsers=ChromeHeadlessCI --code-coverage=true --watch=false"
   },
@@ -36,6 +38,8 @@
     "karma-coverage": "~2.0.3",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "^1.5.0",
+    "karma-sonarqube-unit-reporter": "^0.0.23",
+    "rimraf": "^3.0.2",
     "typescript": "~4.2.3"
   }
 }
