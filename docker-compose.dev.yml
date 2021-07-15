@@ -26,6 +26,7 @@ services:
         
         healthcheck:
             test: ["CMD", "curl", "-f", "http://localhost:9000"]
+            timeout: 5m
     sonarqube-db:
         image: postgres:12
         environment: 
