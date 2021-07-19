@@ -8,7 +8,9 @@ ENV NODE_ENV $NODE_ENV
 
 ARG PORT=4200
 ENV PORT $PORT
-EXPOSE $PORT
+ARG DPORT=9876
+ENV DPORT=$DPORT
+EXPOSE $PORT $DPORT
 
 # Installs latest Chromium package.
 RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" > /etc/apk/repositories \
