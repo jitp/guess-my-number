@@ -32,6 +32,7 @@
     "@angular-devkit/build-angular": "~12.0.5",
     "@angular/cli": "~12.0.5",
     "@angular/compiler-cli": "~12.0.5",
+    "@ngneat/spectator": "^8.0.1",
     "@types/jasmine": "~3.6.0",
     "@types/node": "^12.11.1",
     "jasmine-core": "~3.7.0",
@@ -41,6 +42,7 @@
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "^1.5.0",
     "karma-sonarqube-unit-reporter": "^0.0.23",
+    "ng-mocks": "^12.3.1",
     "rimraf": "^3.0.2",
     "typescript": "~4.2.3"
   }
