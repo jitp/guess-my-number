@@ -1,25 +1,26 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { byTestId, createComponentFactory, Spectator } from '@ngneat/spectator';
 import { ScoreUiComponent } from './score-ui.component';
 
 describe('ScoreUiComponent', () => {
-  let component: ScoreUiComponent;
-  let fixture: ComponentFixture<ScoreUiComponent>;
+  let spectator: Spectator<ScoreUiComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ ScoreUiComponent ]
-    })
-    .compileComponents();
+  const createComponent = createComponentFactory({
+    component: ScoreUiComponent,
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ScoreUiComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    spectator = createComponent({
+      props: {
+        score: 15,
+      },
+    });
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('creates the component', () => {
+    expect(spectator.component).toBeTruthy();
+  });
+
+  it('renders the score', () => {
+    expect(spectator.query(byTestId('score-value'))).toHaveText('15');
   });
 });
