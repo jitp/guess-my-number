@@ -1,25 +1,27 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { byTestId, createComponentFactory, Spectator } from '@ngneat/spectator';
+import { HighScoreUiComponent } from './high-score-ui.component';
 
-import { HighScoreUirComponent } from './high-score-ui.component';
+describe('HighScoreUiComponent', () => {
+  let spectator: Spectator<HighScoreUiComponent>;
 
-describe('HighScoreUirComponent', () => {
-  let component: HighScoreUirComponent;
-  let fixture: ComponentFixture<HighScoreUirComponent>;
-
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ HighScoreUirComponent ]
-    })
-    .compileComponents();
+  const createComponent = createComponentFactory({
+    component: HighScoreUiComponent,
   });
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(HighScoreUirComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+  beforeEach(
+    () =>
+      (spectator = createComponent({
+        props: {
+          highScore: 20,
+        },
+      }))
+  );
+
+  it('creates the component', () => {
+    expect(spectator.component).toBeTruthy();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('renders the high score', () => {
+    expect(spectator.query(byTestId('high-score-value'))).toHaveText('20');
   });
 });

@@ -1,7 +1,7 @@
 import { createServiceFactory, SpectatorService } from '@ngneat/spectator';
 import { BoardService } from '.';
 
-fdescribe('BoardService', () => {
+describe('BoardService', () => {
   let spectator: SpectatorService<BoardService>;
 
   const createService = createServiceFactory(BoardService);
