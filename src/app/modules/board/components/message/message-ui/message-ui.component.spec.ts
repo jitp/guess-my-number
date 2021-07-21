@@ -1,25 +1,28 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { byTestId, createComponentFactory, Spectator } from '@ngneat/spectator';
 import { MessageUiComponent } from './message-ui.component';
 
 describe('MessageUiComponent', () => {
-  let component: MessageUiComponent;
-  let fixture: ComponentFixture<MessageUiComponent>;
+  let spectator: Spectator<MessageUiComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ MessageUiComponent ]
-    })
-    .compileComponents();
+  const createComponent = createComponentFactory({
+    component: MessageUiComponent,
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MessageUiComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    spectator = createComponent({
+      props: {
+        message: 'Test message',
+      },
+    });
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('creates the component', () => {
+    expect(spectator.component).toBeTruthy();
+  });
+
+  it('renders the message', () => {
+    expect(spectator.query(byTestId('message-value'))).toHaveText(
+      'Test message'
+    );
   });
 });
