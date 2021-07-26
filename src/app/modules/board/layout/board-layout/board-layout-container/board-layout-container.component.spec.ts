@@ -1,25 +1,42 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { BoardSandbox } from '@app/modules/board/services';
+import { createComponentFactory, Spectator } from '@ngneat/spectator';
+import { MockComponents } from 'ng-mocks';
+import { BasePage, createPage } from 'src/tests/helpers';
+import { BoardLayoutUiComponent } from '../board-layout-ui/board-layout-ui.component';
 import { BoardLayoutContainerComponent } from './board-layout-container.component';
 
+type CSpectator = Spectator<BoardLayoutContainerComponent>;
+
+class Page extends BasePage<CSpectator> {
+  get uiCmp(): BoardLayoutUiComponent | null {
+    return this.queryComponent(BoardLayoutUiComponent);
+  }
+}
+
 describe('BoardLayoutContainerComponent', () => {
-  let component: BoardLayoutContainerComponent;
-  let fixture: ComponentFixture<BoardLayoutContainerComponent>;
+  let spectator: CSpectator;
+  let page: Page;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ BoardLayoutContainerComponent ]
-    })
-    .compileComponents();
+  const createComponent = createComponentFactory({
+    component: BoardLayoutContainerComponent,
+    mocks: [BoardSandbox],
+    declarations: [MockComponents(BoardLayoutUiComponent)],
   });
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(BoardLayoutContainerComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+  it('creates the component', () => {
+    expect(createComponent().component).toBeTruthy();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('renders the ui component', () => {
+    spectator = createComponent();
+    page = createPage(spectator, Page);
+
+    expect(page.uiCmp).toBeTruthy();
+  });
+
+  it('inits the state', () => {
+    spectator = createComponent();
+
+    expect(spectator.inject(BoardSandbox).init).toHaveBeenCalledTimes(1);
   });
 });

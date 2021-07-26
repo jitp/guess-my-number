@@ -1,25 +1,48 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { createComponentFactory, Spectator } from '@ngneat/spectator';
+import { MockComponents } from 'ng-mocks';
+import { BasePage, createPage } from 'src/tests/helpers';
+import { BoardHeaderContainerComponent } from '../../board-header';
+import { BoardMainComponent } from '../../board-main/board-main.component';
 import { BoardLayoutUiComponent } from './board-layout-ui.component';
 
+type CSpectator = Spectator<BoardLayoutUiComponent>;
+
+class Page extends BasePage<CSpectator> {
+  get headerCmp(): BoardHeaderContainerComponent | null {
+    return this.queryComponent(BoardHeaderContainerComponent);
+  }
+
+  get mainCmp(): BoardMainComponent | null {
+    return this.queryComponent(BoardMainComponent);
+  }
+}
+
 describe('BoardLayoutUiComponent', () => {
-  let component: BoardLayoutUiComponent;
-  let fixture: ComponentFixture<BoardLayoutUiComponent>;
+  let spectator: CSpectator;
+  let page: Page;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ BoardLayoutUiComponent ]
-    })
-    .compileComponents();
+  const createComponent = createComponentFactory({
+    component: BoardLayoutUiComponent,
+    declarations: [
+      MockComponents(BoardHeaderContainerComponent, BoardMainComponent),
+    ],
   });
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(BoardLayoutUiComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+  it('creates the component', () => {
+    expect(createComponent().component).toBeTruthy();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('renders the header component', () => {
+    spectator = createComponent();
+    page = createPage(spectator, Page);
+
+    expect(page.headerCmp).toBeTruthy();
+  });
+
+  it('renders the main component', () => {
+    spectator = createComponent();
+    page = createPage(spectator, Page);
+
+    expect(page.mainCmp).toBeTruthy();
   });
 });
