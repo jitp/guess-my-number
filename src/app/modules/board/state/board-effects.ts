@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import * as BoardActions from './board-actions';
-import * as BoardSelectors from './board-selectors';
 import { map } from 'rxjs/operators';
 import { BoardService } from '../services/board.service';
 import { BoardStore } from './board.store';
