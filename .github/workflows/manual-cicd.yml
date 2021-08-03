@@ -1,0 +1,20 @@
+# This is a basic workflow that is manually triggered
+
+name: Manual CI/CD workflow
+
+# Controls when the action will run. Workflow runs when manually triggered using the UI
+# or API.
+on:
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  test-app:
+    runs-on: self-hosted
+    steps:
+    - uses: actions/checkout@v2
+    - name: Run Prettier
+      run: |
+        cd guess-my-number
+        docker-compose -p guess-my-name -f docker-compose.dev.yml run guess-my-name npm install
+        docker-compose -p guess-my-name -f docker-compose.dev.yml run guess-my-name npm run test:ci
