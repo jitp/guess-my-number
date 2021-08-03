@@ -13,8 +13,5 @@ jobs:
     runs-on: self-hosted
     steps:
     - uses: actions/checkout@v2
-    - name: Run Prettier
-      run: |
-        ls -la
-        docker-compose -p guess-my-name -f docker-compose.dev.yml run guess-my-name npm install
-        docker-compose -p guess-my-name -f docker-compose.dev.yml run guess-my-name npm run test:ci
+    - run: docker-compose -p guess-my-name -f docker-compose.dev.yml run guess-my-number npm install
+    - run: docker-compose -p guess-my-name -f docker-compose.dev.yml run guess-my-number npm run test:ci
