@@ -15,6 +15,6 @@ jobs:
     - uses: actions/checkout@v2
     - name: Run Prettier
       run: |
-        cd guess-my-number
+        ls -la
         docker-compose -p guess-my-name -f docker-compose.dev.yml run guess-my-name npm install
         docker-compose -p guess-my-name -f docker-compose.dev.yml run guess-my-name npm run test:ci
