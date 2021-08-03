@@ -1,35 +1,33 @@
-import { TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
+import { createRoutingFactory, SpectatorRouting } from '@ngneat/spectator';
+import { Location } from '@angular/common';
 
 describe('AppComponent', () => {
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule
-      ],
-      declarations: [
-        AppComponent
-      ],
-    }).compileComponents();
+  let spectator: SpectatorRouting<AppComponent>;
+
+  const createComponent = createRoutingFactory({
+    component: AppComponent,
+    stubsEnabled: false,
+    routes: [{ path: '**', redirectTo: '', pathMatch: 'full' }],
   });
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
+  beforeEach(() => {
+    spectator = createComponent();
   });
 
-  it(`should have as title 'guess-my-number'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('guess-my-number');
+  it('creates the app', () => {
+    expect(spectator.component).toBeTruthy();
   });
 
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('guess-my-number app is running!');
+  it('redirects to empty location when no system url is given', async () => {
+    await spectator.fixture.whenStable();
+
+    expect(spectator.inject(Location).path()).toBe('/');
+
+    spectator.router.navigate(['/whatever']);
+
+    await spectator.fixture.whenStable();
+
+    expect(spectator.inject(Location).path()).toBe('/');
   });
 });
