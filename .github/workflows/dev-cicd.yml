@@ -1,13 +1,11 @@
-# This is a basic workflow that is manually triggered
+name: Dev CI/CD workflow
 
-name: Manual CI/CD workflow
-
-# Controls when the action will run. Workflow runs when manually triggered using the UI
-# or API.
 on:
-  workflow_dispatch:
+  push:
+    branches: [ dev ]
+  pull_request:
+    branches: [ dev ]
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   test-app:
     runs-on: self-hosted
