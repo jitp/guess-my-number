@@ -9,7 +9,7 @@ on:
 
 env:
   REGISTRY: docker.io
-  IMAGE_NAME: ${{ secrets.DOCKER_USER }}/${{ github.event.repository.name }}
+  IMAGE_NAME: jitpz/${{ github.event.repository.name }}
 
 jobs:
   tests:
@@ -23,7 +23,7 @@ jobs:
     needs: tests
     runs-on: self-hosted
     outputs:
-      image_url: ${{ env.REGISTRY }}/jitpz/${{ github.event.repository.name }}
+      image_url: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
     steps:
       - uses: actions/checkout@v2
       - name: Log into registry ${{ env.REGISTRY }}
