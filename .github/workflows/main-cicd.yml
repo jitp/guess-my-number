@@ -47,7 +47,8 @@ jobs:
   deploy:
     needs: build
     runs-on: self-hosted
-    container: ${{ env.IMAGE_NAME }}
+    container: 
+      image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
     steps:
       - name: Install rsync
         run: |
