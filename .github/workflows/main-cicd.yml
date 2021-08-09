@@ -23,7 +23,7 @@ jobs:
     needs: tests
     runs-on: self-hosted
     outputs:
-      image_url: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+      image_url: ${{ env.REGISTRY }}/jitpz/${{ github.event.repository.name }}
     steps:
       - uses: actions/checkout@v2
       - name: Log into registry ${{ env.REGISTRY }}
