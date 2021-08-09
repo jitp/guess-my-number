@@ -22,8 +22,6 @@ jobs:
   build:
     needs: tests
     runs-on: self-hosted
-    outputs:
-      image_url: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
     steps:
       - uses: actions/checkout@v2
       - name: Log into registry ${{ env.REGISTRY }}
@@ -49,7 +47,7 @@ jobs:
   deploy:
     needs: build
     runs-on: self-hosted
-    container: ${{ needs.build.outputs.image_url }}
+    container: jitpz/${{ github.event.repository.name }}
     steps:
       - name: Install rsync
         run: |
