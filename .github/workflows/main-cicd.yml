@@ -45,16 +45,21 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           
   deploy:
+    if: ${{ github.event_name != 'pull_request' }}
     needs: build
     runs-on: self-hosted
-    container: jitpz/${{ github.event.repository.name }}
+    container: node:14
     steps:
       - name: Install rsync
         run: |
           apt-get update && apt-get install -y rsync git
+      - uses: actions/checkout@v2
+      - name: Build for github pages
+        run: |
+          npm run build -- --base-href /${{ github.event.repository.name }}/
       - uses: JamesIves/github-pages-deploy-action@4.1.4
         with:
-          folder: /usr/share/nginx/html
+          folder: ./dist/guess-my-number
           branch: gh-pages
     
     
