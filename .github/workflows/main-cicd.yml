@@ -51,7 +51,7 @@ jobs:
     steps:
       - name: Install rsync
         run: |
-          apt-get update && apt-get install -y rsync
+          apt-get update && apt-get install -y rsync git
       - uses: JamesIves/github-pages-deploy-action@4.1.4
         with:
           folder: /usr/share/nginx/html
