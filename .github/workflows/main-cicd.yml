@@ -55,5 +55,6 @@ jobs:
       - uses: JamesIves/github-pages-deploy-action@4.1.4
         with:
           folder: /usr/share/nginx/html
+          branch: gh-pages
     
     
