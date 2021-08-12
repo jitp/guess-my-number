@@ -48,7 +48,7 @@ jobs:
     if: ${{ github.event_name != 'pull_request' }}
     needs: build
     runs-on: self-hosted
-    container: node:14
+    container: node:latest
     steps:
       - name: Install rsync
         run: |
