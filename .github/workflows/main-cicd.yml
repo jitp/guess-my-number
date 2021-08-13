@@ -61,7 +61,7 @@ jobs:
           ls -la
       - uses: JamesIves/github-pages-deploy-action@4.1.4
         with:
-          folder: dist/guess-my-number
+          folder: dist
           branch: gh-pages
           
     
