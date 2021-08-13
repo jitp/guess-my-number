@@ -1,0 +1,28 @@
+.c-main
+    display: flex
+    align-items: center
+    justify-content: space-around
+    flex-wrap: wrap
+    @include rfs(3rem 0 3.625rem, padding)
+
+    &__left
+        display: flex
+        flex-direction: column
+        align-items: center
+    
+    &__right
+        @include font-size(2rem)
+
+    &__guess
+        background: none
+        border: 4px solid #eee
+        color: inherit
+        @include font-size(4rem)
+        @include rfs(5em, width)
+        @include rfs(0.5em, padding)
+        @include rfs(0.6em, margin-bottom)
+        text-align: center
+        display: block
+
+    &__check
+        margin-bottom: 1rem

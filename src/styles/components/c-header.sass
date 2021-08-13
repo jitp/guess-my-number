@@ -1,0 +1,30 @@
+.c-header
+    position: relative
+    border-bottom: rfs-fluid-value(0.5rem) solid $white
+    @include rfs(3rem, margin-bottom)
+
+    &__title
+        @include font-size(3rem)
+        text-align: center
+        clear: both
+        @include rfs(0.4375em 0 1em, margin)
+
+    &__between
+        @include font-size(0.875rem)
+        float: right
+        @include rfs(0.571428em 0 0.285714em, margin)
+    
+    &__again
+        float: left
+        @include rfs(0.5625rem 0 0.3125rem, margin)
+
+    &__number
+        background: $white
+        color: $black
+        @include font-size(2rem)
+        @include rfs(0.0625em solid $white, border)
+        width: 3em
+        min-width: 3em
+        @include rfs(0.6875em 0, padding)
+        @include rfs(0 auto -1.6em, margin)
+        text-align: center

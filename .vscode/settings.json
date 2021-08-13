@@ -1,0 +1,6 @@
+{
+    "sonarlint.connectedMode.project": {
+        "connectionId": "guess-my-number",
+        "projectKey": "angular:guess-my-number"
+    }
+}

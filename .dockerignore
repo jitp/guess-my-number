@@ -1,0 +1,10 @@
+.git
+.vscode
+.scannerwork
+coverage
+reports
+*Dockerfile*
+*docker-compose*
+node_modules
+
+.DS_Store

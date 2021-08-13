@@ -1,0 +1,16 @@
+<header class="c-header">
+  <div class="c-header__top clearfix">
+    <button
+      class="c-header__again btn btn-secondary"
+      data-testid="play-again-btn"
+      (click)="again.next()"
+    >
+      Again!
+    </button>
+    <span class="c-header__between" data-testid="between-msg"
+      >(Between 1 and 20)</span
+    >
+  </div>
+  <h1 class="c-header__title" data-testid="header-title">Guess My Number!</h1>
+  <div class="c-header__number" data-testid="game-secret">{{ secret }}</div>
+</header>

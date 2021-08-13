@@ -1,0 +1,15 @@
+name: Dev CI/CD workflow
+
+on:
+  push:
+    branches: [ dev ]
+  pull_request:
+    branches: [ dev ]
+
+jobs:
+  test-app:
+    runs-on: self-hosted
+    steps:
+    - uses: actions/checkout@v2
+    - run: docker-compose -p guess-my-name -f docker-compose.dev.yml run guess-my-number npm install
+    - run: docker-compose -p guess-my-name -f docker-compose.dev.yml run guess-my-number npm run test:ci
