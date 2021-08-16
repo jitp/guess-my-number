@@ -1,133 +1,137 @@
-import { FormsModule } from '@angular/forms';
-import {
-  byTestId,
-  createHostFactory,
-  SpectatorHost,
-} from '@ngneat/spectator';
-import { BasePage, createPage } from 'src/tests/helpers';
-import { InputUiComponent } from './input-ui.component';
+import { FormsModule } from "@angular/forms";
+import { byTestId, createHostFactory, SpectatorHost } from "@ngneat/spectator";
+import { BasePage, createPage } from "src/tests/helpers";
+import { InputUiComponent } from "./input-ui.component";
 
 type CSpectator = SpectatorHost<InputUiComponent>;
 
 class Page extends BasePage<CSpectator> {
-  get inputElement(): HTMLInputElement | null {
-    return this.queryTestId('input-element');
-  }
+    get inputElement(): HTMLInputElement | null {
+        return this.queryTestId("input-element");
+    }
 
-  get checkBtn(): HTMLButtonElement | null {
-    return this.queryTestId('check-btn');
-  }
+    get checkBtn(): HTMLButtonElement | null {
+        return this.queryTestId("check-btn");
+    }
 
-  clickCheckBtn(): this {
-    this.spectator.click(byTestId('check-btn'));
+    clickCheckBtn(): this {
+        this.spectator.click(byTestId("check-btn"));
 
-    return this;
-  }
+        return this;
+    }
 
-  typeInputElement(value: string): this {
-    this.spectator.typeInElement(value, byTestId('input-element'));
+    typeInputElement(value: string): this {
+        this.spectator.typeInElement(value, byTestId("input-element"));
 
-    return this;
-  }
+        return this;
+    }
 }
 
-describe('InputUiComponent', () => {
-  let spectator: CSpectator;
-  let page: Page;
+describe("InputUiComponent", () => {
+    let spectator: CSpectator;
+    let page: Page;
 
-  const createHost = createHostFactory({
-    component: InputUiComponent,
-    imports: [FormsModule],
-  });
-
-  it('creates the component', () => {
-    spectator = createHost(`<app-input-ui></app-input-ui>`);
-    expect(spectator.component).toBeTruthy();
-  });
-
-  it('renders the input value', async () => {
-    spectator = createHost(`<app-input-ui [value]="value"></app-input-ui>`, {
-      hostProps: {
-        value: 5,
-      },
+    const createHost = createHostFactory({
+        component: InputUiComponent,
+        imports: [FormsModule],
     });
-    page = createPage(spectator, Page);
 
-    await spectator.hostFixture.whenStable();
-
-    expect(page.inputElement?.value).toBe('5');
-  });
-
-  it('updates the input value', async () => {
-    spectator = createHost(`<app-input-ui [value]="value"></app-input-ui>`, {
-      hostProps: {
-        value: 5,
-      },
+    it("creates the component", () => {
+        spectator = createHost(`<app-input-ui></app-input-ui>`);
+        expect(spectator.component).toBeTruthy();
     });
-    page = createPage(spectator, Page);
 
-    await spectator.hostFixture.whenStable();
+    it("renders the input value", async () => {
+        spectator = createHost(
+            `<app-input-ui [value]="value"></app-input-ui>`,
+            {
+                hostProps: {
+                    value: 5,
+                },
+            }
+        );
+        page = createPage(spectator, Page);
 
-    page.typeInputElement('10');
+        await spectator.hostFixture.whenStable();
 
-    expect(spectator.component.value).toBe(10);
-  });
+        expect(page.inputElement?.value).toBe("5");
+    });
 
-  it('enables/disables the check button', () => {
-    spectator = createHost(
-      `<app-input-ui [disabled]="disabled"></app-input-ui>`,
-      {
-        hostProps: {
-          disabled: true,
-        },
-      }
-    );
-    page = createPage(spectator, Page);
+    it("updates the input value", async () => {
+        spectator = createHost(
+            `<app-input-ui [value]="value"></app-input-ui>`,
+            {
+                hostProps: {
+                    value: 5,
+                },
+            }
+        );
+        page = createPage(spectator, Page);
 
-    expect(spectator.component.disabled).toBeTrue();
-    expect(page.checkBtn).toHaveAttribute('disabled');
+        await spectator.hostFixture.whenStable();
 
-    spectator.setHostInput({ disabled: false });
+        page.typeInputElement("10");
 
-    expect(spectator.component.disabled).toBeFalse();
-    expect(page.checkBtn).not.toHaveAttribute('disabled');
-  });
+        expect(spectator.component.value).toBe(10);
+    });
 
-  it('renders input with min and max attributes', () => {
-    spectator = createHost(
-      `<app-input-ui [min]="min" [max]="max"></app-input-ui>`,
-      {
-        hostProps: {
-          min: 1,
-          max: 20,
-        },
-      }
-    );
-    page = createPage(spectator, Page);
+    it("enables/disables the check button", () => {
+        spectator = createHost(
+            `<app-input-ui [disabled]="disabled"></app-input-ui>`,
+            {
+                hostProps: {
+                    disabled: true,
+                },
+            }
+        );
+        page = createPage(spectator, Page);
 
-    expect(spectator.component.min).toBe(1);
-    expect(spectator.component.max).toBe(20);
-    expect(page.inputElement).toHaveAttribute('min', '1');
-    expect(page.inputElement).toHaveAttribute('max', '20');
-  });
+        expect(spectator.component.disabled).toBeTrue();
+        expect(page.checkBtn).toHaveAttribute("disabled");
 
-  it('emits valueChange when input is changed', () => {
-    spectator = createHost(
-      `<app-input-ui (valueChange)="x=$event"></app-input-ui>`
-    );
-    page = createPage(spectator, Page);
+        spectator.setHostInput({ disabled: false });
 
-    page.typeInputElement('12');
+        expect(spectator.component.disabled).toBeFalse();
+        expect(page.checkBtn).not.toHaveAttribute("disabled");
+    });
 
-    expect((spectator.hostComponent as any).x).toBe(12);
-  });
+    it("renders input with min and max attributes", () => {
+        spectator = createHost(
+            `<app-input-ui [min]="min" [max]="max"></app-input-ui>`,
+            {
+                hostProps: {
+                    min: 1,
+                    max: 20,
+                },
+            }
+        );
+        page = createPage(spectator, Page);
 
-  it('emits the check event when check button is pressed', () => {
-    spectator = createHost(`<app-input-ui (check)="x=$event"></app-input-ui>`);
-    page = createPage(spectator, Page);
+        expect(spectator.component.min).toBe(1);
+        expect(spectator.component.max).toBe(20);
+        expect(page.inputElement).toHaveAttribute("min", "1");
+        expect(page.inputElement).toHaveAttribute("max", "20");
+    });
 
-    page.typeInputElement('15').clickCheckBtn();
+    it("emits valueChange when input is changed", () => {
+        spectator = createHost(
+            `<app-input-ui (valueChange)="x=$event"></app-input-ui>`
+        );
+        page = createPage(spectator, Page);
 
-    expect((spectator.hostComponent as any).x).toBe(15);
-  });
+        page.typeInputElement("12");
+
+        expect((spectator.hostComponent as any).x).toBe(12);
+    });
+
+    it("emits the check event when check button is pressed", () => {
+        spectator = createHost(
+            `<app-input-ui (check)="x=$event"></app-input-ui>`
+        );
+        page = createPage(spectator, Page);
+
+        page.typeInputElement("15").clickCheckBtn();
+
+        expect((spectator.hostComponent as any).x).toBe(15);
+    });
 });

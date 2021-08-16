@@ -1,7 +1,7 @@
 version: "3.9"
 services:
     guess-my-number:
-        build: 
+        build:
             dockerfile: Dockerfile.dev
             context: ./
         ports:
@@ -17,19 +17,19 @@ services:
             SONAR_JDBC_URL: jdbc:postgresql://sonarqube-db:5432/sonar
             SONAR_JDBC_USERNAME: sonar
             SONAR_JDBC_PASSWORD: sonar
-        volumes: 
+        volumes:
             - sonarqube_data:/opt/sonarqube/data
             - sonarqube_logs:/opt/sonarqube/logs
             - sonarqube_extensions:/opt/sonarqube/extensions
         ports:
             - "9000:9000"
-        
+
         healthcheck:
             test: ["CMD", "curl", "-f", "http://localhost:9000"]
             timeout: 5m
     sonarqube-db:
         image: postgres:12
-        environment: 
+        environment:
             POSTGRES_USER: sonar
             POSTGRES_PASSWORD: sonar
         volumes:
@@ -42,8 +42,12 @@ services:
             - sonarqube-server
         volumes:
             - ./:/usr/src
-        command: ["./wait-for-sonarqube.sh", "sonarqube-server:9000","sonar-scanner"]
-
+        command:
+            [
+                "./wait-for-sonarqube.sh",
+                "sonarqube-server:9000",
+                "sonar-scanner",
+            ]
 
 volumes:
     sonarqube_data:

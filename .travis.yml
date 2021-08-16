@@ -3,43 +3,43 @@ language: generic
 sudo: required
 
 services:
-  - docker
+    - docker
 
 env:
-  - DOCKER_COMPOSE_VERSION=1.29.2
+    - DOCKER_COMPOSE_VERSION=1.29.2
 
 branches:
-  only:
-    - master
+    only:
+        - master
 
 before_install:
-  - sudo rm /usr/local/bin/docker-compose
-  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
-  - chmod +x docker-compose
-  - sudo mv docker-compose /usr/local/bin
-  - docker-compose -p guess-my-number -f docker-compose.dev.yml run -u root --rm guess-my-number chown -R node:node .
-  - docker-compose -p guess-my-number -f docker-compose.dev.yml run --rm -u node guess-my-number npm install
+    - sudo rm /usr/local/bin/docker-compose
+    - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+    - chmod +x docker-compose
+    - sudo mv docker-compose /usr/local/bin
+    - docker-compose -p guess-my-number -f docker-compose.dev.yml run -u root --rm guess-my-number chown -R node:node .
+    - docker-compose -p guess-my-number -f docker-compose.dev.yml run --rm -u node guess-my-number npm install
 
 script:
-  - docker-compose -p guess-my-number -f docker-compose.dev.yml run --rm -u node guess-my-number npm run test:ci
+    - docker-compose -p guess-my-number -f docker-compose.dev.yml run --rm -u node guess-my-number npm run test:ci
 
 after_success:
-  - docker build -t jitpz/guess-my-number:0.0.1 -t jitpz/guess-my-number:latest ./
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
-  - docker push jitpz/guess-my-number
+    - docker build -t jitpz/guess-my-number:0.0.1 -t jitpz/guess-my-number:latest ./
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+    - docker push jitpz/guess-my-number
 
 before_deploy:
-  - docker-compose -p guess-my-number -f docker-compose.dev.yml run --rm -u root guess-my-number chown -R $UID:$UID ./
+    - docker-compose -p guess-my-number -f docker-compose.dev.yml run --rm -u root guess-my-number chown -R $UID:$UID ./
 
 deploy:
-  provider: elasticbeanstalk
-  region: "us-east-2"
-  app: "guess-my-number"
-  env: "Guessmynumber-env-1"
-  bucket_name: "elasticbeanstalk-us-east-2-708390195852"
-  bucket_path: "guess-my-number"
-  skip_cleanup: true
-  on:
-    branch: main
-  access_key_id: $AWS_ACCESS_KEY
-  secret_access_key: $AWS_SECRET_KEY
+    provider: elasticbeanstalk
+    region: "us-east-2"
+    app: "guess-my-number"
+    env: "Guessmynumber-env-1"
+    bucket_name: "elasticbeanstalk-us-east-2-708390195852"
+    bucket_path: "guess-my-number"
+    skip_cleanup: true
+    on:
+        branch: main
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY

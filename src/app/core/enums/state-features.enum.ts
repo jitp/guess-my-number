@@ -1,3 +1,3 @@
 export enum StateFeatureEnum {
-  BOARD = 'board',
+    BOARD = "board",
 }
