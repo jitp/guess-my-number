@@ -1,18 +1,18 @@
 <input
-  type="number"
-  class="c-main__guess"
-  min="{{min}}"
-  max="{{max}}"
-  [(ngModel)]="value"
-  (ngModelChange)="valueChange.emit($event)"
-  name="value"
-  data-testid="input-element"
+    type="number"
+    class="c-main__guess"
+    min="{{ min }}"
+    max="{{ max }}"
+    [(ngModel)]="value"
+    (ngModelChange)="valueChange.emit($event)"
+    name="value"
+    data-testid="input-element"
 />
 <button
-  class="btn btn-primary c-main__check"
-  (click)="check.emit(value)"
-  [disabled]="disabled"
-  data-testid="check-btn"
+    class="btn btn-primary c-main__check"
+    (click)="check.emit(value)"
+    [disabled]="disabled"
+    data-testid="check-btn"
 >
-  Check!
+    Check!
 </button>
